@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cowork Studio · Tu Espacio de Trabajo & Comunidad</title>
+  <meta name="description" content="Cowork Studio: hot desks, oficinas privadas, salas de reuniones y eventos en un solo lugar. Reserva online." />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#2563eb',
+            'primary-light': '#3b82f6',
+            'primary-dark': '#1d4ed8',
+            accent: '#64748b',
+            'background-dark': '#0f172a',
+            'background-card': '#1e293b'
+          },
+          fontFamily: {
+            display: ['Playfair Display'],
+            sans: ['Inter']
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-page="index" class="bg-background-dark text-gray-200 font-sans">
+  <div id="appHeader"></div>
+
+  <main>
+    <section class="relative min-h-[90vh] flex items-center hero-pattern" style="background-image: url('https://images.unsplash.com/photo-1497366216548-37526070297c?w=1600&q=80'); background-size: cover; background-position: center;">
+      <div class="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div class="max-w-3xl">
+          <div class="inline-flex items-center gap-2 bg-primary/10 border border-primary/30 rounded-full px-4 py-1.5 mb-6">
+            <span class="h-2 w-2 bg-primary rounded-full animate-pulse"></span>
+            <span class="text-xs uppercase tracking-widest text-primary font-semibold">Reserva online · Disponible 24/7</span>
+          </div>
+          <h1 class="text-5xl md:text-7xl lg:text-8xl font-black text-white leading-[1.05] mb-6" style="font-family: 'Playfair Display', serif;">
+            Trabaja mejor,<br><span class="text-primary italic">juntos.</span>
+          </h1>
+          <p class="text-lg md:text-xl text-gray-200 max-w-2xl mb-10 leading-relaxed">
+            Hot desks, oficinas privadas y salas de reuniones diseñadas para que tu equipo se enfoque en lo importante. Una comunidad que inspira y un espacio que se adapta a ti.
+          </p>
+          <div class="flex flex-wrap gap-4">
+            <a href="reserva.html" class="btn-primary text-base">
+              <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+              Reservar ahora
+            </a>
+            <a href="servicios.html" class="btn-outline text-base">Ver servicios</a>
+          </div>
+          <div class="flex flex-wrap items-center gap-8 mt-12 pt-8 border-t border-white/10">
+            <div>
+              <p class="text-3xl font-bold text-white" style="font-family: 'Playfair Display', serif;">500+</p>
+              <p class="text-xs uppercase tracking-wider text-gray-400">Miembros activos</p>
+            </div>
+            <div>
+              <p class="text-3xl font-bold text-white" style="font-family: 'Playfair Display', serif;">9</p>
+              <p class="text-xs uppercase tracking-wider text-gray-400">Espacios & salas</p>
+            </div>
+            <div>
+              <p class="text-3xl font-bold text-white" style="font-family: 'Playfair Display', serif;">4.9</p>
+              <p class="text-xs uppercase tracking-wider text-gray-400">Calificación ★</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 animate-bounce">
+        <svg class="h-8 w-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+      </div>
+    </section>
+
+    <section class="py-20 gradient-radial">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          <div>
+            <p class="text-primary uppercase tracking-[0.3em] text-xs mb-3 font-medium">Sobre nosotros</p>
+            <h2 class="text-4xl md:text-5xl font-bold text-white mb-6" style="font-family: 'Playfair Display', serif;">Un espacio, infinitas posibilidades</h2>
+            <p class="text-gray-300 leading-relaxed mb-6">En <span class="text-primary font-semibold">Cowork Studio</span> creemos que el mejor trabajo nace de la combinación entre un espacio cuidado, una comunidad activa y herramientas que potencian tu día a día.</p>
+            <p class="text-gray-300 leading-relaxed mb-8">Desde freelancers independientes hasta equipos consolidados, nuestro espacio se adapta a tu ritmo. Reserva online, paga seguro y enfócate en lo que importa.</p>
+            <div class="grid grid-cols-3 gap-6">
+              <div>
+                <p class="text-3xl md:text-4xl font-bold text-primary" style="font-family: 'Playfair Display', serif;">5+</p>
+                <p class="text-xs uppercase tracking-wider text-gray-400 mt-1">Años</p>
+              </div>
+              <div>
+                <p class="text-3xl md:text-4xl font-bold text-primary" style="font-family: 'Playfair Display', serif;">9</p>
+                <p class="text-xs uppercase tracking-wider text-gray-400 mt-1">Espacios</p>
+              </div>
+              <div>
+                <p class="text-3xl md:text-4xl font-bold text-primary" style="font-family: 'Playfair Display', serif;">24/7</p>
+                <p class="text-xs uppercase tracking-wider text-gray-400 mt-1">Disponible</p>
+              </div>
+            </div>
+          </div>
+          <div class="relative">
+            <div class="aspect-[4/5] rounded-2xl overflow-hidden shadow-2xl border border-primary/20">
+              <img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=800&q=80" alt="Interior del cowork" class="w-full h-full object-cover" />
+            </div>
+            <div class="absolute -bottom-6 -left-6 bg-background-card border border-primary/30 rounded-xl p-6 shadow-2xl max-w-[200px]">
+              <p class="text-primary text-3xl font-bold" style="font-family: 'Playfair Display', serif;">★ 4.9</p>
+              <p class="text-gray-400 text-sm mt-1">Calificación de nuestra comunidad</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <p class="text-primary uppercase tracking-[0.3em] text-xs mb-3 font-medium">Lo que ofrecemos</p>
+          <h2 class="text-4xl md:text-5xl font-bold text-white mb-4" style="font-family: 'Playfair Display', serif;">Nuestros servicios</h2>
+          <p class="text-gray-400 max-w-2xl mx-auto">Soluciones flexibles para cada forma de trabajar</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" id="serviciosDestacados"></div>
+        <div class="text-center mt-10">
+          <a href="servicios.html" class="btn-outline">Ver todos los servicios</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20 bg-background-card/40 border-y border-primary/10">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <p class="text-primary uppercase tracking-[0.3em] text-xs mb-3 font-medium">Nuestras salas</p>
+          <h2 class="text-4xl md:text-5xl font-bold text-white mb-4" style="font-family: 'Playfair Display', serif;">Espacios reservables</h2>
+          <p class="text-gray-400 max-w-2xl mx-auto">Salas equipadas para reuniones, focus y eventos</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="espaciosDestacados"></div>
+      </div>
+    </section>
+
+    <section class="py-20">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <p class="text-primary uppercase tracking-[0.3em] text-xs mb-3 font-medium">Por qué elegirnos</p>
+          <h2 class="text-4xl md:text-5xl font-bold text-white mb-4" style="font-family: 'Playfair Display', serif;">Ventajas del cowork</h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div class="bg-background-card border border-gray-800 rounded-2xl p-6 card-hover">
+            <div class="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-4">
+              <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+            </div>
+            <h3 class="text-white font-bold mb-2" style="font-family: 'Playfair Display', serif;">Reserva instantánea</h3>
+            <p class="text-sm text-gray-400">Reserva online en menos de 1 minuto, sin llamadas ni formularios largos.</p>
+          </div>
+          <div class="bg-background-card border border-gray-800 rounded-2xl p-6 card-hover">
+            <div class="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-4">
+              <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <h3 class="text-white font-bold mb-2" style="font-family: 'Playfair Display', serif;">Horario flexible</h3>
+            <p class="text-sm text-gray-400">Acceso de 7:00 a 22:00 de lunes a viernes. Sábados de 9:00 a 18:00.</p>
+          </div>
+          <div class="bg-background-card border border-gray-800 rounded-2xl p-6 card-hover">
+            <div class="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-4">
+              <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+            </div>
+            <h3 class="text-white font-bold mb-2" style="font-family: 'Playfair Display', serif;">Comunidad activa</h3>
+            <p class="text-sm text-gray-400">Workshops, networking y mentorías todos los meses para crecer juntos.</p>
+          </div>
+          <div class="bg-background-card border border-gray-800 rounded-2xl p-6 card-hover">
+            <div class="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-4">
+              <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+            </div>
+            <h3 class="text-white font-bold mb-2" style="font-family: 'Playfair Display', serif;">Pago seguro</h3>
+            <p class="text-sm text-gray-400">Múltiples métodos de pago y confirmación inmediata de tu reserva.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20 bg-background-card/40 border-y border-primary/10">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <p class="text-primary uppercase tracking-[0.3em] text-xs mb-3 font-medium">Testimonios</p>
+          <h2 class="text-4xl md:text-5xl font-bold text-white mb-4" style="font-family: 'Playfair Display', serif;">Lo que dice la comunidad</h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div class="bg-background-card border border-gray-800 rounded-2xl p-6 card-hover">
+            <div class="flex items-center gap-1 mb-4 text-primary">★★★★★</div>
+            <p class="text-gray-300 mb-5 italic">"El mejor espacio de cowork en el que he trabajado. La reserva online es súper rápida y el ambiente es increíble."</p>
+            <div class="flex items-center gap-3 pt-4 border-t border-gray-800">
+              <img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=200&q=80" alt="Felipe Araya" class="h-10 w-10 rounded-full object-cover"/>
+              <div>
+                <p class="text-white font-semibold text-sm">Felipe Araya</p>
+                <p class="text-xs text-gray-500">Diseñador · Miembro desde 2023</p>
+              </div>
+            </div>
+          </div>
+          <div class="bg-background-card border border-gray-800 rounded-2xl p-6 card-hover">
+            <div class="flex items-center gap-1 mb-4 text-primary">★★★★★</div>
+            <p class="text-gray-300 mb-5 italic">"Las salas de reuniones son excelentes y el wifi nunca falla. Reservar desde la app es súper cómodo."</p>
+            <div class="flex items-center gap-3 pt-4 border-t border-gray-800">
+              <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&q=80" alt="Constanza Vidal" class="h-10 w-10 rounded-full object-cover"/>
+              <div>
+                <p class="text-white font-semibold text-sm">Constanza Vidal</p>
+                <p class="text-xs text-gray-500">Consultora · Miembro desde 2022</p>
+              </div>
+            </div>
+          </div>
+          <div class="bg-background-card border border-gray-800 rounded-2xl p-6 card-hover">
+            <div class="flex items-center gap-1 mb-4 text-primary">★★★★★</div>
+            <p class="text-gray-300 mb-5 italic">"Los workshops y mentorías son un plus enorme. He conocido gente increíble y aprendido mucho."</p>
+            <div class="flex items-center gap-3 pt-4 border-t border-gray-800">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80" alt="Roberto Méndez" class="h-10 w-10 rounded-full object-cover"/>
+              <div>
+                <p class="text-white font-semibold text-sm">Roberto Méndez</p>
+                <p class="text-xs text-gray-500">Startup Founder · Miembro desde 2024</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-gradient-to-br from-primary/10 to-primary-dark/10 border border-primary/20 rounded-3xl p-8 md:p-12 text-center max-w-4xl mx-auto">
+          <p class="text-primary uppercase tracking-[0.3em] text-xs mb-3 font-medium">¿Listo para empezar?</p>
+          <h2 class="text-3xl md:text-5xl font-bold text-white mb-4" style="font-family: 'Playfair Display', serif;">Reserva tu espacio hoy</h2>
+          <p class="text-gray-300 mb-8 max-w-2xl mx-auto">Reserva online en menos de 1 minuto. Sin contratos forzosos, sin letra chica.</p>
+          <div class="flex flex-wrap justify-center gap-4">
+            <a href="reserva.html" class="btn-primary">Reservar ahora</a>
+            <a href="contacto.html" class="btn-outline">Contactar</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="appFooter"></div>
+  <script src="main.js"></script>
+  <script>
+    function pageInit() {
+      const destacados = document.getElementById('serviciosDestacados');
+      destacados.innerHTML = SERVICIOS.slice(0, 6).map(s => `
+        <div class="bg-background-card border border-gray-800 rounded-2xl overflow-hidden card-hover">
+          <div class="aspect-[4/3] overflow-hidden">
+            <img src="${s.imagen}" alt="${s.nombre}" class="w-full h-full object-cover"/>
+          </div>
+          <div class="p-5">
+            <span class="text-[10px] uppercase tracking-widest text-primary font-semibold">${UI.categoriaLabel(s.categoria)}</span>
+            <h3 class="text-white font-bold mt-1 mb-2" style="font-family: 'Playfair Display', serif;">${s.nombre}</h3>
+            <p class="text-sm text-gray-400 mb-4 line-clamp-2">${s.descripcion}</p>
+            <div class="flex items-center justify-between pt-3 border-t border-gray-800">
+              <span class="text-primary font-bold" style="font-family: 'Playfair Display', serif;">${UI.formatPrice(s.precio)}<span class="text-xs text-gray-400 font-sans">/${s.unidad}</span></span>
+              <a href="reserva.html?servicio=${s.id}" class="text-xs text-primary hover:text-primary-light font-semibold">Reservar →</a>
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+      const espacios = document.getElementById('espaciosDestacados');
+      espacios.innerHTML = ESPACIOS.slice(0, 6).map(p => `
+        <div class="bg-background-card border border-gray-800 rounded-2xl overflow-hidden card-hover">
+          <div class="aspect-[4/3] overflow-hidden relative">
+            <img src="${p.imagen}" alt="${p.nombre}" class="w-full h-full object-cover"/>
+            <div class="absolute top-3 right-3 bg-background-dark/80 backdrop-blur px-2 py-1 rounded text-xs text-primary font-semibold">★ ${p.rating}</div>
+          </div>
+          <div class="p-5">
+            <h3 class="text-white font-bold mb-1" style="font-family: 'Playfair Display', serif;">${p.nombre}</h3>
+            <p class="text-xs text-gray-400 mb-3">Capacidad: ${p.capacidad} personas</p>
+            <div class="flex flex-wrap gap-1 mb-3">
+              ${p.servicios.slice(0, 3).map(s => `<span class="text-[10px] bg-primary/10 text-primary border border-primary/20 rounded px-2 py-0.5">${s}</span>`).join('')}
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+  </script>
+</body>
+</html>

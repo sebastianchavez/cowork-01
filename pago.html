@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pago · Cowork Studio</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: { primary: '#2563eb', 'primary-light': '#3b82f6', accent: '#64748b', 'background-dark': '#0f172a', 'background-card': '#1e293b' },
+          fontFamily: { display: ['Playfair Display'], sans: ['Inter'] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-page="pago" class="bg-background-dark text-gray-200 font-sans">
+  <div id="appHeader"></div>
+
+  <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="text-center mb-10">
+      <p class="text-primary uppercase tracking-[0.3em] text-xs mb-2 font-medium">Paso final</p>
+      <h1 class="text-4xl md:text-5xl font-bold text-white mb-3" style="font-family: 'Playfair Display', serif;">Realizar pago</h1>
+      <p class="text-gray-400">Elige tu método de pago y completa la reserva</p>
+    </div>
+
+    <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div class="lg:col-span-2 space-y-6">
+        <div class="bg-background-card border border-gray-800 rounded-2xl p-6 md:p-8">
+          <h2 class="text-xl font-bold text-white mb-5" style="font-family: 'Playfair Display', serif;">Método de pago</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="metodosPago"></div>
+        </div>
+
+        <div id="formContainer" class="bg-background-card border border-gray-800 rounded-2xl p-6 md:p-8"></div>
+      </div>
+
+      <aside class="lg:col-span-1">
+        <div class="bg-background-card border border-primary/20 rounded-2xl p-6 sticky top-28">
+          <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2" style="font-family: 'Playfair Display', serif;">
+            <svg class="h-5 w-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+            Resumen
+          </h3>
+          <div id="resumenPago" class="space-y-3 text-sm"></div>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <div id="appFooter"></div>
+  <script src="main.js"></script>
+  <script>
+    let selectedMetodo = null;
+
+    function pageInit() {
+      if (!Auth.isLogged()) { window.location.href = 'inicio-sesion.html'; return; }
+      const id = Storage.get(STORAGE_KEYS.RESERVA_ACTUAL);
+      if (!id) { window.location.href = 'reserva.html'; return; }
+      const r = Reservas.get(id);
+      if (!r) { window.location.href = 'reserva.html'; return; }
+      if (r.pago === 'pagado') {
+        Storage.set(STORAGE_KEYS.RESERVA_ACTUAL, r.id);
+        window.location.href = 'pago-confirmado.html';
+        return;
+      }
+
+      renderMetodos();
+      renderResumen(r);
+    }
+
+    function renderMetodos() {
+      document.getElementById('metodosPago').innerHTML = METODOS_PAGO.map(m => `
+        <div class="payment-method flex items-center gap-3" data-metodo="${m.id}">
+          <div class="h-10 w-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center flex-shrink-0">${iconSvg(m.icono, 'h-5 w-5')}</div>
+          <span class="text-white font-semibold text-sm">${m.nombre}</span>
+          <svg class="h-5 w-5 text-primary ml-auto check-icon hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+        </div>
+      `).join('');
+
+      document.querySelectorAll('.payment-method').forEach(el => {
+        el.addEventListener('click', () => {
+          document.querySelectorAll('.payment-method').forEach(x => { x.classList.remove('selected'); x.querySelector('.check-icon').classList.add('hidden'); });
+          el.classList.add('selected');
+          el.querySelector('.check-icon').classList.remove('hidden');
+          selectedMetodo = el.dataset.metodo;
+          renderForm();
+        });
+      });
+    }
+
+    function renderForm() {
+      const cont = document.getElementById('formContainer');
+      if (selectedMetodo === 'tarjeta' || selectedMetodo === 'webpay') {
+        cont.innerHTML = `
+          <h2 class="text-xl font-bold text-white mb-5" style="font-family: 'Playfair Display', serif;">Datos de la tarjeta</h2>
+          <form id="formPago" class="space-y-4">
+            <div>
+              <label class="label-base">Nombre del titular</label>
+              <input type="text" name="titular" required class="input-base" placeholder="Como aparece en la tarjeta"/>
+            </div>
+            <div>
+              <label class="label-base">Número de tarjeta</label>
+              <input type="text" name="numero" required maxlength="19" class="input-base" placeholder="1234 5678 9012 3456"/>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="label-base">Vencimiento</label>
+                <input type="text" name="vencimiento" required maxlength="5" class="input-base" placeholder="MM/AA"/>
+              </div>
+              <div>
+                <label class="label-base">CVV</label>
+                <input type="text" name="cvv" required maxlength="4" class="input-base" placeholder="123"/>
+              </div>
+            </div>
+            <div>
+              <label class="label-base">Cuotas</label>
+              <select class="input-base">
+                <option>Sin cuotas</option>
+                <option>3 cuotas sin interés</option>
+                <option>6 cuotas sin interés</option>
+                <option>12 cuotas</option>
+              </select>
+            </div>
+            <button type="submit" class="btn-primary w-full">
+              <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 014 0v10zm2-10V7a4 4 0 118 0v4"></path></svg>
+              Pagar de forma segura
+            </button>
+            <p class="text-xs text-gray-500 text-center flex items-center justify-center gap-1">
+              <svg class="h-4 w-4 text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3z"></path></svg>
+              Pago 100% seguro y encriptado
+            </p>
+          </form>`;
+        const form = document.getElementById('formPago');
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          procesarPago(selectedMetodo);
+        });
+      } else if (selectedMetodo === 'transferencia') {
+        cont.innerHTML = `
+          <h2 class="text-xl font-bold text-white mb-5" style="font-family: 'Playfair Display', serif;">Transferencia bancaria</h2>
+          <div class="bg-background-dark/50 rounded-xl p-5 mb-5 space-y-2 text-sm">
+            <p class="text-gray-400">Realiza la transferencia a:</p>
+            <div class="space-y-1 text-white">
+              <p><strong class="text-primary">Banco:</strong> Banco Estado</p>
+              <p><strong class="text-primary">Tipo:</strong> Cuenta Corriente</p>
+              <p><strong class="text-primary">N°:</strong> 123-45678-901</p>
+              <p><strong class="text-primary">RUT:</strong> 76.123.456-7</p>
+              <p><strong class="text-primary">Titular:</strong> Cowork Studio SpA</p>
+              <p><strong class="text-primary">Email:</strong> pagos@coworkstudio.cl</p>
+            </div>
+          </div>
+          <form id="formPago" class="space-y-4">
+            <div>
+              <label class="label-base">N° de operación</label>
+              <input type="text" required class="input-base" placeholder="Ej: 123456789"/>
+            </div>
+            <button type="submit" class="btn-primary w-full">Confirmar transferencia</button>
+          </form>`;
+        const form = document.getElementById('formPago');
+        form.addEventListener('submit', (e) => { e.preventDefault(); procesarPago(selectedMetodo); });
+      } else if (selectedMetodo === 'efectivo') {
+        cont.innerHTML = `
+          <h2 class="text-xl font-bold text-white mb-5" style="font-family: 'Playfair Display', serif;">Pago en efectivo</h2>
+          <div class="bg-background-dark/50 rounded-xl p-5 mb-5 text-sm">
+            <p class="text-gray-300 mb-3">Acércate a nuestra recepción en horario de oficina y paga en efectivo. Tu reserva quedará confirmada al momento del pago.</p>
+            <p class="text-xs text-gray-400"><strong class="text-white">Dirección:</strong> Av. Apoquindo 4520, Las Condes</p>
+            <p class="text-xs text-gray-400"><strong class="text-white">Horario:</strong> Lun-Vie 08:00 - 20:00</p>
+          </div>
+          <button id="btnConfirm" class="btn-primary w-full">Confirmar que pagaré en local</button>`;
+        document.getElementById('btnConfirm').addEventListener('click', () => procesarPago(selectedMetodo));
+      } else {
+        cont.innerHTML = `<p class="text-gray-400 text-center py-8">Selecciona un método de pago para continuar</p>`;
+      }
+    }
+
+    function renderResumen(r) {
+      const serv = UI.servicioById(r.servicioId);
+      const esp = r.espacioId ? UI.espacioById(r.espacioId) : null;
+      document.getElementById('resumenPago').innerHTML = `
+        <div class="flex justify-between"><span class="text-gray-400">Servicio:</span><span class="text-white font-medium text-right">${serv.nombre}</span></div>
+        ${esp ? `<div class="flex justify-between"><span class="text-gray-400">Espacio:</span><span class="text-white font-medium text-right">${esp.nombre}</span></div>` : ''}
+        <div class="flex justify-between"><span class="text-gray-400">Fecha:</span><span class="text-white font-medium text-right">${UI.formatDateShort(r.fecha)}</span></div>
+        <div class="flex justify-between"><span class="text-gray-400">Hora:</span><span class="text-white font-medium">${r.hora}</span></div>
+        <div class="border-t border-gray-800 pt-3 mt-3 space-y-2 text-sm">
+          <div class="flex justify-between text-gray-400"><span>Subtotal</span><span>${UI.formatPrice(r.precio)}</span></div>
+          <div class="flex justify-between text-gray-400"><span>IVA incluido</span><span>$0</span></div>
+          <div class="flex justify-between text-base pt-2 border-t border-gray-800">
+            <span class="text-white font-bold">Total</span>
+            <span class="text-primary text-2xl font-bold" style="font-family: 'Playfair Display', serif;">${UI.formatPrice(r.precio)}</span>
+          </div>
+        </div>`;
+    }
+
+    function procesarPago(metodo) {
+      const id = Storage.get(STORAGE_KEYS.RESERVA_ACTUAL);
+      const r = Reservas.markPaid(id, metodo);
+      UI.toast('¡Pago procesado exitosamente!');
+      setTimeout(() => window.location.href = 'pago-confirmado.html', 800);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Términos y Condiciones · Cowork Studio</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: { primary: '#2563eb', 'primary-light': '#3b82f6', accent: '#64748b', 'background-dark': '#0f172a', 'background-card': '#1e293b' },
+          fontFamily: { display: ['Playfair Display'], sans: ['Inter'] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-page="terminos" class="bg-background-dark text-gray-200 font-sans">
+  <div id="appHeader"></div>
+
+  <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="text-center mb-10">
+      <p class="text-primary uppercase tracking-[0.3em] text-xs mb-2 font-medium">Documento legal</p>
+      <h1 class="text-4xl md:text-5xl font-bold text-white mb-3" style="font-family: 'Playfair Display', serif;">Términos y Condiciones</h1>
+      <p class="text-gray-400">Última actualización: Enero 2026</p>
+    </div>
+
+    <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-4 gap-8">
+      <aside class="lg:col-span-1">
+        <div class="bg-background-card border border-gray-800 rounded-2xl p-5 sticky top-28">
+          <h3 class="text-sm font-bold text-white uppercase tracking-wider mb-3">Contenido</h3>
+          <nav id="tocList" class="space-y-1 border-l border-gray-800"></nav>
+        </div>
+      </aside>
+
+      <div class="lg:col-span-3 bg-background-card border border-gray-800 rounded-2xl p-7 md:p-10 legal-content">
+        <h2 id="aceptacion">1. Aceptación de los términos</h2>
+        <p>Al acceder y utilizar los servicios de <strong>Cowork Studio</strong> (en adelante "la Empresa"), usted acepta estar sujeto a los presentes Términos y Condiciones. Si no está de acuerdo con alguna parte de estos términos, no deberá utilizar nuestros servicios.</p>
+
+        <h2 id="servicios">2. Descripción de los servicios</h2>
+        <p>Cowork Studio ofrece los siguientes servicios:</p>
+        <ul>
+          <li>Hot desks por día, semana o mes</li>
+          <li>Oficinas privadas amuebladas (individuales y para equipos)</li>
+          <li>Salas de reuniones por reserva horaria</li>
+          <li>Salas de eventos para workshops y actividades corporativas</li>
+          <li>Oficinas virtuales con recepción de correspondencia</li>
+          <li>Workshops, mentorías y eventos de comunidad</li>
+        </ul>
+
+        <h2 id="reservas">3. Reservas y cancelaciones</h2>
+        <h3>3.1 Realización de reservas</h3>
+        <p>Las reservas se realizan a través de nuestra plataforma online. Para confirmar una reserva es necesario:</p>
+        <ul>
+          <li>Contar con una cuenta activa en la plataforma</li>
+          <li>Seleccionar el servicio, espacio (cuando aplique), fecha y hora</li>
+          <li>Completar el pago correspondiente</li>
+        </ul>
+        <h3>3.2 Política de cancelación</h3>
+        <ul>
+          <li><strong>Salas y eventos:</strong> cancelación gratuita hasta 24 horas antes del horario reservado.</li>
+          <li><strong>Planes mensuales:</strong> cancelación con aviso de 30 días; no se reembolsan pagos parciales del mes en curso.</li>
+          <li><strong>Day Pass:</strong> no se realizan devoluciones una vez iniciada la reserva.</li>
+        </ul>
+        <h3>3.3 Anulación por parte de la Empresa</h3>
+        <p>La Empresa se reserva el derecho de anular reservas en casos de fuerza mayor, mantenimiento urgente o incumplimiento de las normas internas. En estos casos, se procederá al reembolso total o a la reprogramación.</p>
+
+        <h2 id="pagos">4. Pagos y facturación</h2>
+        <ul>
+          <li>Los precios publicados incluyen IVA.</li>
+          <li>Aceptamos tarjeta de crédito/débito, Webpay, transferencia bancaria y efectivo en local.</li>
+          <li>Los pagos mensuales se cargan automáticamente el día 1 de cada mes.</li>
+          <li>Los comprobantes se envían al correo registrado en la cuenta.</li>
+        </ul>
+
+        <h2 id="uso">5. Uso de las instalaciones</h2>
+        <h3>5.1 Normas generales</h3>
+        <ul>
+          <li>Respetar los horarios de apertura del espacio.</li>
+          <li>Mantener un ambiente de trabajo respetuoso y silencioso en zonas comunes.</li>
+          <li>No fumar dentro de las instalaciones.</li>
+          <li>No consumir alcohol ni sustancias ilícitas.</li>
+          <li>Cuidar el mobiliario, equipamiento e infraestructura.</li>
+        </ul>
+        <h3>5.2 Responsabilidad por daños</h3>
+        <p>El usuario es responsable de los daños que ocasione a las instalaciones, mobiliario o equipamiento. La Empresa podrá cobrar el costo de reparación o reemplazo.</p>
+
+        <h2 id="conducta">7. Conducta y convivencia</h2>
+        <p>Cowork Studio es un espacio diverso e inclusivo. Esperamos que todos los usuarios mantengan una conducta respetuosa. La Empresa se reserva el derecho de cancelar membresías o reservas en caso de:</p>
+        <ul>
+          <li>Comportamiento agresivo o acosador</li>
+          <li>Uso del espacio para actividades ilícitas</li>
+          <li>Reiteradas molestias a otros miembros</li>
+          <li>Incumplimiento reiterado de las normas internas</li>
+        </ul>
+
+        <h2 id="responsabilidad">8. Limitación de responsabilidad</h2>
+        <p>La Empresa no se hace responsable por:</p>
+        <ul>
+          <li>Pérdida o robo de objetos personales dentro de las instalaciones.</li>
+          <li>Daños a equipos electrónicos derivados de cortes de energía o fallos en la conexión a internet.</li>
+          <li>Perjuicios derivados de la indisponibilidad temporal de servicios por mantención.</li>
+        </ul>
+        <p>Cada miembro es responsable de sus equipos y objetos personales.</p>
+
+        <h2 id="datos">9. Protección de datos personales</h2>
+        <p>El tratamiento de datos personales se realiza conforme a nuestra <a href="privacidad.html" class="text-primary hover:underline">Política de Privacidad</a> y a la legislación chilena vigente.</p>
+
+        <h2 id="modificaciones">10. Modificaciones</h2>
+        <p>La Empresa se reserva el derecho de modificar estos Términos y Condiciones en cualquier momento. Las versiones actualizadas serán notificadas a través de la plataforma y/o correo electrónico con al menos 30 días de anticipación.</p>
+
+        <h2 id="jurisdiccion">11. Jurisdicción y ley aplicable</h2>
+        <p>Estos Términos y Condiciones se rigen por las leyes de la República de Chile. Cualquier controversia será resuelta por los tribunales competentes de la ciudad de Santiago de Chile.</p>
+
+        <h2 id="contacto">12. Contacto</h2>
+        <p>Para consultas sobre estos Términos y Condiciones:</p>
+        <ul>
+          <li><strong>Email:</strong> legal@coworkstudio.cl</li>
+          <li><strong>Teléfono:</strong> +56 2 2895 4300</li>
+          <li><strong>Dirección:</strong> Av. Apoquindo 4520, Piso 8, Las Condes, Santiago</li>
+        </ul>
+
+        <div class="mt-10 pt-6 border-t border-gray-800 text-center">
+          <a href="index.html" class="btn-outline">← Volver al inicio</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="appFooter"></div>
+  <script src="main.js"></script>
+  <script>
+    function pageInit() {
+      const sections = document.querySelectorAll('.legal-content h2[id]');
+      const toc = document.getElementById('tocList');
+      toc.innerHTML = Array.from(sections).map(s => {
+        const num = s.id ? '' : '';
+        const text = s.textContent;
+        return `<a href="#${s.id}" class="toc-link">${text}</a>`;
+      }).join('');
+
+      document.querySelectorAll('.toc-link').forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const target = document.querySelector(link.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            document.querySelectorAll('.toc-link').forEach(l => l.classList.remove('active'));
+            link.classList.add('active');
+          }
+        });
+      });
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            document.querySelectorAll('.toc-link').forEach(l => l.classList.remove('active'));
+            const link = document.querySelector(`.toc-link[href="#${entry.target.id}"]`);
+            if (link) link.classList.add('active');
+          }
+        });
+      }, { rootMargin: '-30% 0px -60% 0px' });
+
+      sections.forEach(s => observer.observe(s));
+    }
+  </script>
+</body>
+</html>

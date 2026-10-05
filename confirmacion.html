@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reserva Confirmada · Cowork Studio</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: { primary: '#2563eb', 'primary-light': '#3b82f6', accent: '#64748b', 'background-dark': '#0f172a', 'background-card': '#1e293b' },
+          fontFamily: { display: ['Playfair Display'], sans: ['Inter'] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-page="confirmacion" class="bg-background-dark text-gray-200 font-sans">
+  <div id="appHeader"></div>
+
+  <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div class="max-w-2xl mx-auto">
+      <div class="bg-background-card border border-gray-800 rounded-2xl p-8 md:p-10 text-center">
+        <div class="checkmark-circle mx-auto mb-6">
+          <div class="background"></div>
+          <div class="checkmark"></div>
+        </div>
+        <p class="text-primary uppercase tracking-[0.3em] text-xs mb-2 font-medium">Reserva creada</p>
+        <h1 class="text-3xl md:text-4xl font-bold text-white mb-3" style="font-family: 'Playfair Display', serif;">¡Reserva confirmada!</h1>
+        <p class="text-gray-300 mb-8">Tu reserva ha sido creada exitosamente. Revisa los detalles y procede al pago para confirmarla definitivamente.</p>
+
+        <div id="resumenBox" class="bg-background-dark/50 rounded-xl p-6 text-left mb-8"></div>
+
+        <div class="flex flex-col sm:flex-row gap-3 justify-center">
+          <a href="pago.html" class="btn-primary">
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+            Ir a pagar
+          </a>
+          <a href="perfil.html" class="btn-outline">Ver mis reservas</a>
+        </div>
+      </div>
+
+      <div class="mt-6 bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-5 flex gap-3">
+        <svg class="h-6 w-6 text-yellow-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        <div>
+          <p class="text-yellow-200 font-semibold text-sm">Tu reserva está pendiente de pago</p>
+          <p class="text-yellow-300/80 text-xs mt-1">Si no la pagas en las próximas 24 horas, se cancelará automáticamente. Puedes anularla manualmente desde tu perfil.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="appFooter"></div>
+  <script src="main.js"></script>
+  <script>
+    function pageInit() {
+      if (!Auth.isLogged()) { window.location.href = 'inicio-sesion.html'; return; }
+      const id = Storage.get(STORAGE_KEYS.RESERVA_ACTUAL);
+      if (!id) { window.location.href = 'index.html'; return; }
+      const r = Reservas.get(id);
+      if (!r) { window.location.href = 'index.html'; return; }
+
+      const serv = UI.servicioById(r.servicioId);
+      const esp = r.espacioId ? UI.espacioById(r.espacioId) : null;
+
+      document.getElementById('resumenBox').innerHTML = `
+        <div class="flex items-center justify-between pb-3 border-b border-gray-800 mb-3">
+          <span class="text-xs text-gray-400 uppercase tracking-wider">Código de reserva</span>
+          <span class="text-primary font-mono font-bold">${r.id.toUpperCase()}</span>
+        </div>
+        <div class="space-y-3 text-sm">
+          <div class="flex items-start gap-3">
+            <img src="${serv.imagen}" class="h-12 w-12 rounded-lg object-cover flex-shrink-0"/>
+            <div class="flex-1">
+              <p class="text-xs text-primary">Servicio</p>
+              <p class="text-white font-semibold">${serv.nombre}</p>
+            </div>
+          </div>
+          ${esp ? `
+          <div class="flex items-start gap-3">
+            <img src="${esp.imagen}" class="h-12 w-12 rounded-lg object-cover flex-shrink-0"/>
+            <div class="flex-1">
+              <p class="text-xs text-primary">Espacio</p>
+              <p class="text-white font-semibold">${esp.nombre}</p>
+            </div>
+          </div>` : ''}
+          <div class="grid grid-cols-2 gap-3 pt-3 border-t border-gray-800">
+            <div>
+              <p class="text-xs text-primary">Fecha</p>
+              <p class="text-white font-semibold">${UI.formatDateShort(r.fecha)}</p>
+            </div>
+            <div>
+              <p class="text-xs text-primary">Hora</p>
+              <p class="text-white font-semibold">${r.hora}</p>
+            </div>
+          </div>
+          <div class="flex justify-between items-center pt-3 border-t border-gray-800">
+            <span class="text-gray-400">Total a pagar</span>
+            <span class="text-primary text-2xl font-bold" style="font-family: 'Playfair Display', serif;">${UI.formatPrice(r.precio)}</span>
+          </div>
+        </div>`;
+    }
+  </script>
+</body>
+</html>

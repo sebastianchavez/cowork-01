@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reservar · Cowork Studio</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: { primary: '#2563eb', 'primary-light': '#3b82f6', accent: '#64748b', 'background-dark': '#0f172a', 'background-card': '#1e293b' },
+          fontFamily: { display: ['Playfair Display'], sans: ['Inter'] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-page="reserva" class="bg-background-dark text-gray-200 font-sans">
+  <div id="appHeader"></div>
+
+  <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="text-center mb-10">
+      <p class="text-primary uppercase tracking-[0.3em] text-xs mb-2 font-medium">Reserva online</p>
+      <h1 class="text-4xl md:text-5xl font-bold text-white mb-3" style="font-family: 'Playfair Display', serif;">Reservar espacio</h1>
+      <p class="text-gray-400">Sigue los pasos para completar tu reserva</p>
+    </div>
+
+    <div class="max-w-4xl mx-auto mb-10">
+      <div class="flex items-center justify-between">
+        <div class="flex flex-col items-center gap-1 flex-1">
+          <div id="dot1" class="step-dot w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold bg-primary text-white border-2 border-primary">1</div>
+          <span id="lbl1" class="text-xs text-primary">Servicio</span>
+        </div>
+        <div id="line1" class="step-line flex-1 mx-2"></div>
+        <div class="flex flex-col items-center gap-1 flex-1">
+          <div id="dot2" class="step-dot w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold bg-gray-800 text-gray-500 border-2 border-gray-700">2</div>
+          <span id="lbl2" class="text-xs text-gray-500">Espacio</span>
+        </div>
+        <div id="line2" class="step-line flex-1 mx-2"></div>
+        <div class="flex flex-col items-center gap-1 flex-1">
+          <div id="dot3" class="step-dot w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold bg-gray-800 text-gray-500 border-2 border-gray-700">3</div>
+          <span id="lbl3" class="text-xs text-gray-500">Fecha y hora</span>
+        </div>
+        <div id="line3" class="step-line flex-1 mx-2"></div>
+        <div class="flex flex-col items-center gap-1 flex-1">
+          <div id="dot4" class="step-dot w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold bg-gray-800 text-gray-500 border-2 border-gray-700">4</div>
+          <span id="lbl4" class="text-xs text-gray-500">Confirmar</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div class="lg:col-span-2">
+        <div id="stepPanel" class="bg-background-card border border-gray-800 rounded-2xl p-6 md:p-8"></div>
+      </div>
+      <aside class="lg:col-span-1">
+        <div class="bg-background-card border border-primary/20 rounded-2xl p-6 sticky top-28">
+          <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2" style="font-family: 'Playfair Display', serif;">
+            <svg class="h-5 w-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+            Resumen
+          </h3>
+          <div class="space-y-3 text-sm" id="resumenBox">
+            <div class="flex justify-between"><span class="text-gray-400">Servicio:</span><span id="r-servicio" class="text-white font-medium text-right">—</span></div>
+            <div class="flex justify-between"><span class="text-gray-400">Espacio:</span><span id="r-espacio" class="text-white font-medium text-right">—</span></div>
+            <div class="flex justify-between"><span class="text-gray-400">Fecha:</span><span id="r-fecha" class="text-white font-medium text-right">—</span></div>
+            <div class="flex justify-between"><span class="text-gray-400">Hora:</span><span id="r-hora" class="text-white font-medium">—</span></div>
+            <div class="border-t border-gray-800 pt-3 mt-3 flex justify-between text-base">
+              <span class="text-white font-semibold">Total:</span>
+              <span id="r-precio" class="text-primary text-xl font-bold" style="font-family: 'Playfair Display', serif;">$0</span>
+            </div>
+          </div>
+          <div id="loginWarning" class="hidden mt-4 bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-3 text-xs text-yellow-300">
+            <p class="font-semibold mb-1">Inicia sesión para reservar</p>
+            <p>Necesitas una cuenta para confirmar tu reserva.</p>
+            <a href="inicio-sesion.html" class="inline-block mt-2 text-primary hover:underline">Ingresar →</a>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <div id="appFooter"></div>
+  <script src="main.js"></script>
+  <script>
+    const draft = Reservas.getDraft() || {};
+    const state = {
+      step: 1,
+      servicioId: draft.servicioId || '',
+      espacioId: draft.espacioId || '',
+      fecha: draft.fecha || '',
+      hora: draft.hora || ''
+    };
+
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('servicio')) state.servicioId = params.get('servicio');
+
+    function updateProgress() {
+      for (let i = 1; i <= 4; i++) {
+        const dot = document.getElementById('dot' + i);
+        const lbl = document.getElementById('lbl' + i);
+        dot.classList.remove('bg-primary', 'text-white', 'bg-gray-200', 'text-primary', 'bg-gray-800', 'text-gray-500', 'border-primary', 'border-gray-300', 'border-gray-700');
+        if (i < state.step) {
+          dot.classList.add('bg-primary', 'text-white', 'border-primary');
+          lbl.classList.remove('text-gray-500'); lbl.classList.add('text-primary');
+        } else if (i === state.step) {
+          dot.classList.add('bg-primary', 'text-white', 'border-primary');
+          lbl.classList.remove('text-gray-500'); lbl.classList.add('text-primary');
+        } else {
+          dot.classList.add('bg-gray-800', 'text-gray-500', 'border-gray-700');
+          lbl.classList.remove('text-primary'); lbl.classList.add('text-gray-500');
+        }
+      }
+      for (let i = 1; i <= 3; i++) {
+        document.getElementById('line' + i).classList.toggle('active', i < state.step);
+      }
+    }
+
+    function updateResumen() {
+      const s = UI.servicioById(state.servicioId);
+      const e = UI.espacioById(state.espacioId);
+      document.getElementById('r-servicio').textContent = s ? s.nombre : '—';
+      document.getElementById('r-espacio').textContent = e ? e.nombre : '—';
+      document.getElementById('r-fecha').textContent = state.fecha ? UI.formatDate(state.fecha) : '—';
+      document.getElementById('r-hora').textContent = state.hora || '—';
+      document.getElementById('r-precio').textContent = s ? UI.formatPrice(s.precio) : '$0';
+    }
+
+    function saveDraft() {
+      Reservas.setDraft({
+        servicioId: state.servicioId,
+        espacioId: state.espacioId,
+        fecha: state.fecha,
+        hora: state.hora
+      });
+    }
+
+    function renderStep() {
+      const panel = document.getElementById('stepPanel');
+      if (state.step === 1) {
+        panel.innerHTML = `
+          <h2 class="text-2xl font-bold text-white mb-2" style="font-family: 'Playfair Display', serif;">Selecciona un servicio</h2>
+          <p class="text-sm text-gray-400 mb-6">Elige el servicio que deseas reservar</p>
+          <div class="space-y-3" id="serviciosList"></div>
+          <div class="flex justify-end mt-6">
+            <button id="btnNext" class="btn-primary" disabled>Siguiente →</button>
+          </div>`;
+        const srv = document.getElementById('serviciosList');
+        srv.innerHTML = SERVICIOS.map(s => `
+          <div class="service-card border-2 border-gray-800 rounded-xl p-4 flex items-center gap-4 cursor-pointer hover:border-primary/40 transition-all ${state.servicioId === s.id ? 'selected' : ''}" data-id="${s.id}">
+            <img src="${s.imagen}" alt="${s.nombre}" class="h-16 w-16 rounded-lg object-cover flex-shrink-0"/>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-[10px] uppercase tracking-widest text-primary font-semibold">${UI.categoriaLabel(s.categoria)}</span>
+              </div>
+              <h3 class="text-white font-semibold">${s.nombre}</h3>
+              <p class="text-xs text-gray-400 truncate">${s.descripcion}</p>
+            </div>
+            <div class="text-right flex-shrink-0">
+              <p class="text-primary font-bold text-lg" style="font-family: 'Playfair Display', serif;">${UI.formatPrice(s.precio)}</p>
+              <p class="text-xs text-gray-500">por ${s.unidad}</p>
+            </div>
+          </div>
+        `).join('');
+
+        srv.querySelectorAll('.service-card').forEach(card => {
+          card.addEventListener('click', () => {
+            srv.querySelectorAll('.service-card').forEach(c => c.classList.remove('selected'));
+            card.classList.add('selected');
+            state.servicioId = card.dataset.id;
+            state.espacioId = '';
+            document.getElementById('btnNext').disabled = false;
+            updateResumen();
+            saveDraft();
+          });
+        });
+
+        document.getElementById('btnNext').disabled = !state.servicioId;
+        document.getElementById('btnNext').addEventListener('click', () => { state.step = 2; renderStep(); updateProgress(); });
+      } else if (state.step === 2) {
+        const serv = UI.servicioById(state.servicioId);
+        let candidates = ESPACIOS;
+        let requiresSpace = false;
+        if (serv.categoria === 'sala') {
+          candidates = ESPACIOS.filter(e => e.tipo.startsWith('reunion'));
+          requiresSpace = true;
+        } else if (serv.categoria === 'evento') {
+          candidates = ESPACIOS.filter(e => e.tipo === 'evento');
+          requiresSpace = true;
+        } else if (serv.categoria === 'oficina') {
+          candidates = ESPACIOS.filter(e => e.tipo === 'oficina');
+          requiresSpace = true;
+        }
+
+        panel.innerHTML = `
+          <h2 class="text-2xl font-bold text-white mb-2" style="font-family: 'Playfair Display', serif;">${requiresSpace ? 'Elige tu espacio' : 'Confirma el espacio'}</h2>
+          <p class="text-sm text-gray-400 mb-6">${requiresSpace ? 'Selecciona un espacio para tu reserva' : 'Este servicio no requiere selección de espacio específico'}</p>
+          ${requiresSpace ? '<div class="grid grid-cols-1 gap-3" id="espList"></div>' : '<div class="bg-background-dark/50 rounded-xl p-6 text-center"><p class="text-gray-300">No necesitas elegir un espacio específico para este servicio.</p></div>'}
+          <div class="flex justify-between mt-6">
+            <button id="btnPrev" class="btn-outline">← Anterior</button>
+            <button id="btnNext" class="btn-primary" ${requiresSpace && !state.espacioId ? 'disabled' : ''}>Siguiente →</button>
+          </div>`;
+
+        if (requiresSpace) {
+          const lst = document.getElementById('espList');
+          lst.innerHTML = candidates.map(p => `
+            <div class="espacio-card border-2 border-gray-800 rounded-xl p-4 cursor-pointer hover:border-primary/40 transition-all ${state.espacioId === p.id ? 'selected' : ''}" data-id="${p.id}">
+              <div class="flex items-center gap-4">
+                <img src="${p.imagen}" alt="${p.nombre}" class="h-14 w-14 rounded-lg object-cover flex-shrink-0"/>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-center justify-between mb-1">
+                    <h3 class="text-white font-semibold">${p.nombre}</h3>
+                    <span class="text-primary text-xs">★ ${p.rating}</span>
+                  </div>
+                  <p class="text-xs text-gray-400 truncate">${p.descripcion}</p>
+                  <p class="text-[10px] text-primary mt-1">Capacidad: ${p.capacidad} personas</p>
+                </div>
+              </div>
+            </div>
+          `).join('');
+
+          lst.querySelectorAll('.espacio-card').forEach(card => {
+            card.addEventListener('click', () => {
+              lst.querySelectorAll('.espacio-card').forEach(c => c.classList.remove('selected'));
+              card.classList.add('selected');
+              state.espacioId = card.dataset.id;
+              document.getElementById('btnNext').disabled = false;
+              updateResumen();
+              saveDraft();
+            });
+          });
+        } else {
+          state.espacioId = '';
+          updateResumen();
+        }
+
+        document.getElementById('btnPrev').addEventListener('click', () => { state.step = 1; renderStep(); updateProgress(); });
+        document.getElementById('btnNext').addEventListener('click', () => { state.step = 3; renderStep(); updateProgress(); });
+      } else if (state.step === 3) {
+        const today = new Date().toISOString().split('T')[0];
+        panel.innerHTML = `
+          <h2 class="text-2xl font-bold text-white mb-2" style="font-family: 'Playfair Display', serif;">Fecha y hora</h2>
+          <p class="text-sm text-gray-400 mb-6">Selecciona cuándo quieres tu reserva</p>
+          <div class="space-y-5">
+            <div>
+              <label class="label-base">Fecha</label>
+              <input type="date" id="fechaInput" min="${today}" value="${state.fecha}" class="input-base"/>
+            </div>
+            <div>
+              <label class="label-base">Horarios disponibles</label>
+              <div id="slotsGrid" class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2 mt-2"></div>
+            </div>
+          </div>
+          <div class="flex justify-between mt-6">
+            <button id="btnPrev" class="btn-outline">← Anterior</button>
+            <button id="btnNext" class="btn-primary" disabled>Siguiente →</button>
+          </div>`;
+
+        const fechaEl = document.getElementById('fechaInput');
+        const slotsBox = document.getElementById('slotsGrid');
+        const nextBtn = document.getElementById('btnNext');
+
+        function renderSlots() {
+          state.fecha = fechaEl.value;
+          const slots = UI.generateSlots(state.servicioId, state.fecha);
+          if (!slots.length) {
+            slotsBox.innerHTML = '<p class="col-span-full text-sm text-gray-500">No hay horarios disponibles para esta fecha.</p>';
+            nextBtn.disabled = true;
+            return;
+          }
+          slotsBox.innerHTML = slots.map(s => `
+            <button class="time-slot border border-gray-700 rounded-lg py-2 px-3 text-sm text-gray-300 ${state.hora === s ? 'selected' : ''}" data-time="${s}">${s}</button>
+          `).join('');
+          slotsBox.querySelectorAll('.time-slot').forEach(btn => {
+            btn.addEventListener('click', () => {
+              slotsBox.querySelectorAll('.time-slot').forEach(b => b.classList.remove('selected'));
+              btn.classList.add('selected');
+              state.hora = btn.dataset.time;
+              nextBtn.disabled = false;
+              updateResumen();
+              saveDraft();
+            });
+          });
+          nextBtn.disabled = !state.hora;
+        }
+        fechaEl.addEventListener('change', renderSlots);
+        renderSlots();
+
+        document.getElementById('btnPrev').addEventListener('click', () => { state.step = 2; renderStep(); updateProgress(); });
+        document.getElementById('btnNext').addEventListener('click', () => { state.step = 4; renderStep(); updateProgress(); });
+      } else if (state.step === 4) {
+        const serv = UI.servicioById(state.servicioId);
+        const esp = state.espacioId ? UI.espacioById(state.espacioId) : null;
+        panel.innerHTML = `
+          <h2 class="text-2xl font-bold text-white mb-2" style="font-family: 'Playfair Display', serif;">Confirma tu reserva</h2>
+          <p class="text-sm text-gray-400 mb-6">Revisa los detalles antes de confirmar</p>
+          <div class="bg-background-dark/50 rounded-xl p-5 space-y-4">
+            <div class="flex items-center gap-4 pb-4 border-b border-gray-800">
+              <img src="${serv.imagen}" class="h-14 w-14 rounded-lg object-cover"/>
+              <div>
+                <p class="text-xs text-primary uppercase tracking-wider">Servicio</p>
+                <p class="text-white font-semibold">${serv.nombre}</p>
+                <p class="text-xs text-gray-400">${UI.formatPrice(serv.precio)} / ${serv.unidad}</p>
+              </div>
+            </div>
+            ${esp ? `
+            <div class="flex items-center gap-4 pb-4 border-b border-gray-800">
+              <img src="${esp.imagen}" class="h-14 w-14 rounded-lg object-cover"/>
+              <div>
+                <p class="text-xs text-primary uppercase tracking-wider">Espacio</p>
+                <p class="text-white font-semibold">${esp.nombre}</p>
+                <p class="text-xs text-gray-400">${esp.descripcion}</p>
+              </div>
+            </div>` : ''}
+            <div class="grid grid-cols-2 gap-4 pb-4 border-b border-gray-800">
+              <div>
+                <p class="text-xs text-primary uppercase tracking-wider">Fecha</p>
+                <p class="text-white font-semibold">${UI.formatDate(state.fecha)}</p>
+              </div>
+              <div>
+                <p class="text-xs text-primary uppercase tracking-wider">Hora</p>
+                <p class="text-white font-semibold">${state.hora}</p>
+              </div>
+            </div>
+            <div class="flex justify-between items-center">
+              <p class="text-gray-400">Total a pagar</p>
+              <p class="text-primary text-2xl font-bold" style="font-family: 'Playfair Display', serif;">${UI.formatPrice(serv.precio)}</p>
+            </div>
+          </div>
+          <div class="flex justify-between mt-6">
+            <button id="btnPrev" class="btn-outline">← Anterior</button>
+            <button id="btnConfirm" class="btn-primary">Confirmar reserva</button>
+          </div>`;
+        document.getElementById('btnPrev').addEventListener('click', () => { state.step = 3; renderStep(); updateProgress(); });
+        document.getElementById('btnConfirm').addEventListener('click', () => {
+          if (!Auth.isLogged()) {
+            UI.modal(`
+              <h3 class="text-xl font-bold text-white mb-3" style="font-family: 'Playfair Display', serif;">Necesitas una cuenta</h3>
+              <p class="text-gray-300 mb-5">Para confirmar tu reserva debes iniciar sesión o crear una cuenta nueva.</p>
+              <div class="flex gap-3">
+                <a href="inicio-sesion.html" class="flex-1 btn-outline text-center">Ingresar</a>
+                <a href="registro.html" class="flex-1 btn-primary text-center">Registrarme</a>
+              </div>
+            `);
+            return;
+          }
+          const user = Auth.current();
+          const nueva = Reservas.create({
+            userId: user.id,
+            servicioId: state.servicioId,
+            espacioId: state.espacioId || null,
+            fecha: state.fecha,
+            hora: state.hora,
+            duracion: 1,
+            precio: serv.precio
+          });
+          Reservas.clearDraft();
+          Storage.set(STORAGE_KEYS.RESERVA_ACTUAL, nueva.id);
+          UI.toast('¡Reserva confirmada!');
+          setTimeout(() => window.location.href = 'confirmacion.html', 800);
+        });
+      }
+    }
+
+    function pageInit() {
+      updateProgress();
+      updateResumen();
+      renderStep();
+      if (!Auth.isLogged()) {
+        document.getElementById('loginWarning').classList.remove('hidden');
+      }
+    }
+  </script>
+</body>
+</html>

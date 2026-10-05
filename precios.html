@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Precios & Planes · Cowork Studio</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: { primary: '#2563eb', 'primary-light': '#3b82f6', accent: '#64748b', 'background-dark': '#0f172a', 'background-card': '#1e293b' },
+          fontFamily: { display: ['Playfair Display'], sans: ['Inter'] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-page="precios" class="bg-background-dark text-gray-200 font-sans">
+  <div id="appHeader"></div>
+
+  <main>
+    <section class="py-20 border-b border-primary/10">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <p class="text-primary uppercase tracking-[0.3em] text-xs mb-3 font-medium">Planes transparentes</p>
+        <h1 class="text-5xl md:text-6xl font-bold text-white mb-6" style="font-family: 'Playfair Display', serif;">Precios & Planes</h1>
+        <p class="text-gray-300 text-lg max-w-2xl mx-auto">Elige el plan que se ajuste a tu ritmo. Sin contratos forzosos, cancela cuando quieras.</p>
+      </div>
+    </section>
+
+    <section class="py-16">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5" id="planesGrid"></div>
+      </div>
+    </section>
+
+    <section class="py-16 bg-background-card/40 border-y border-primary/10">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <p class="text-primary uppercase tracking-[0.3em] text-xs mb-3 font-medium">Comparativa</p>
+          <h2 class="text-3xl md:text-4xl font-bold text-white mb-4" style="font-family: 'Playfair Display', serif;">¿Qué incluye cada plan?</h2>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-sm">
+            <thead class="border-b border-primary/20">
+              <tr class="text-gray-400 uppercase text-xs tracking-wider">
+                <th class="py-4 px-4">Beneficio</th>
+                <th class="py-4 px-4 text-center">Day Pass</th>
+                <th class="py-4 px-4 text-center">Flexible</th>
+                <th class="py-4 px-4 text-center">Dedicado</th>
+                <th class="py-4 px-4 text-center">Equipo</th>
+              </tr>
+            </thead>
+            <tbody class="text-gray-300">
+              <tr class="border-b border-gray-800"><td class="py-4 px-4">Hot desk compartido</td><td class="py-4 px-4 text-center">✓</td><td class="py-4 px-4 text-center">✓</td><td class="py-4 px-4 text-center">✓</td><td class="py-4 px-4 text-center">✓</td></tr>
+              <tr class="border-b border-gray-800"><td class="py-4 px-4">Escritorio dedicado 24/7</td><td class="py-4 px-4 text-center text-gray-600">—</td><td class="py-4 px-4 text-center text-gray-600">—</td><td class="py-4 px-4 text-center">✓</td><td class="py-4 px-4 text-center">✓</td></tr>
+              <tr class="border-b border-gray-800"><td class="py-4 px-4">Oficina privada</td><td class="py-4 px-4 text-center text-gray-600">—</td><td class="py-4 px-4 text-center text-gray-600">—</td><td class="py-4 px-4 text-center text-gray-600">—</td><td class="py-4 px-4 text-center">✓</td></tr>
+              <tr class="border-b border-gray-800"><td class="py-4 px-4">Wifi gigabit</td><td class="py-4 px-4 text-center">✓</td><td class="py-4 px-4 text-center">✓</td><td class="py-4 px-4 text-center">✓</td><td class="py-4 px-4 text-center">✓</td></tr>
+              <tr class="border-b border-gray-800"><td class="py-4 px-4">Café y snacks</td><td class="py-4 px-4 text-center">Básico</td><td class="py-4 px-4 text-center">✓</td><td class="py-4 px-4 text-center">Premium</td><td class="py-4 px-4 text-center">Premium</td></tr>
+              <tr class="border-b border-gray-800"><td class="py-4 px-4">Sala de reuniones (horas/mes)</td><td class="py-4 px-4 text-center text-gray-600">—</td><td class="py-4 px-4 text-center">2</td><td class="py-4 px-4 text-center">4</td><td class="py-4 px-4 text-center">10</td></tr>
+              <tr class="border-b border-gray-800"><td class="py-4 px-4">Locker personal</td><td class="py-4 px-4 text-center text-gray-600">—</td><td class="py-4 px-4 text-center text-gray-600">—</td><td class="py-4 px-4 text-center">✓</td><td class="py-4 px-4 text-center">✓</td></tr>
+              <tr class="border-b border-gray-800"><td class="py-4 px-4">Impresión</td><td class="py-4 px-4 text-center">10 pág</td><td class="py-4 px-4 text-center">Ilimitada</td><td class="py-4 px-4 text-center">Ilimitada</td><td class="py-4 px-4 text-center">Ilimitada</td></tr>
+              <tr class="border-b border-gray-800"><td class="py-4 px-4">Domicilio comercial</td><td class="py-4 px-4 text-center text-gray-600">—</td><td class="py-4 px-4 text-center text-gray-600">—</td><td class="py-4 px-4 text-center text-gray-600">—</td><td class="py-4 px-4 text-center">✓</td></tr>
+              <tr><td class="py-4 px-4">Acceso 24/7</td><td class="py-4 px-4 text-center text-gray-600">—</td><td class="py-4 px-4 text-center text-gray-600">—</td><td class="py-4 px-4 text-center">✓</td><td class="py-4 px-4 text-center">✓</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl md:text-4xl font-bold text-white mb-4" style="font-family: 'Playfair Display', serif;">Preguntas frecuentes</h2>
+        </div>
+        <div class="max-w-3xl mx-auto space-y-3">
+          <details class="bg-background-card border border-gray-800 rounded-xl p-5 group">
+            <summary class="flex items-center justify-between cursor-pointer text-white font-semibold">
+              ¿Puedo cambiar de plan en cualquier momento?
+              <svg class="h-5 w-5 text-primary transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            </summary>
+            <p class="text-gray-400 mt-3 text-sm">Sí, puedes subir o bajar de plan cuando quieras. El cobro es proporcional a los días utilizados.</p>
+          </details>
+          <details class="bg-background-card border border-gray-800 rounded-xl p-5 group">
+            <summary class="flex items-center justify-between cursor-pointer text-white font-semibold">
+              ¿Hay permanencia forzada?
+              <svg class="h-5 w-5 text-primary transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            </summary>
+            <p class="text-gray-400 mt-3 text-sm">No. Todos nuestros planes son mes a mes sin cláusula de permanencia.</p>
+          </details>
+          <details class="bg-background-card border border-gray-800 rounded-xl p-5 group">
+            <summary class="flex items-center justify-between cursor-pointer text-white font-semibold">
+              ¿Qué métodos de pago aceptan?
+              <svg class="h-5 w-5 text-primary transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            </summary>
+            <p class="text-gray-400 mt-3 text-sm">Tarjeta de crédito/débito, Webpay, transferencia bancaria y efectivo en local.</p>
+          </details>
+          <details class="bg-background-card border border-gray-800 rounded-xl p-5 group">
+            <summary class="flex items-center justify-between cursor-pointer text-white font-semibold">
+              ¿Puedo hacer una visita antes de reservar?
+              <svg class="h-5 w-5 text-primary transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            </summary>
+            <p class="text-gray-400 mt-3 text-sm">Por supuesto. Puedes reservar un Day Pass para probar el espacio o coordinar una visita guiada gratuita.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="appFooter"></div>
+  <script src="main.js"></script>
+  <script>
+    function pageInit() {
+      document.getElementById('planesGrid').innerHTML = PLANES.map(p => `
+        <div class="bg-background-card border ${p.destacado ? 'border-primary ring-2 ring-primary/30' : 'border-gray-800'} rounded-2xl p-6 relative card-hover ${p.destacado ? 'shadow-2xl shadow-primary/20' : ''}">
+          ${p.destacado ? '<div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-white text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full">Más popular</div>' : ''}
+          <h3 class="text-xl font-bold text-white mb-2" style="font-family: 'Playfair Display', serif;">${p.nombre}</h3>
+          <p class="text-sm text-gray-400 mb-5">${p.descripcion}</p>
+          <div class="mb-6">
+            <span class="text-4xl font-black text-primary" style="font-family: 'Playfair Display', serif;">${UI.formatPrice(p.precio)}</span>
+            <span class="text-sm text-gray-400">/${p.periodo}</span>
+          </div>
+          <ul class="space-y-2 mb-6 text-sm">
+            ${p.beneficios.map(b => `
+              <li class="flex items-start gap-2">
+                ${b.incluido
+                  ? '<svg class="h-4 w-4 text-success mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg><span class="text-gray-300">' + b.texto + '</span>'
+                  : '<svg class="h-4 w-4 text-gray-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg><span class="text-gray-500 line-through">' + b.texto + '</span>'}
+              </li>
+            `).join('')}
+          </ul>
+          <a href="${p.id === 'p2' ? 'reserva.html?servicio=cw2' : (p.id === 'p1' ? 'reserva.html?servicio=cw1' : 'contacto.html')}" class="${p.destacado ? 'btn-primary' : 'btn-outline'} w-full">${p.destacado ? 'Elegir plan' : 'Más información'}</a>
+        </div>
+      `).join('');
+    }
+  </script>
+</body>
+</html>

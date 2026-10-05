@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pago Confirmado · Cowork Studio</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: { primary: '#2563eb', 'primary-light': '#3b82f6', accent: '#64748b', 'background-dark': '#0f172a', 'background-card': '#1e293b' },
+          fontFamily: { display: ['Playfair Display'], sans: ['Inter'] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-page="pago-confirmado" class="bg-background-dark text-gray-200 font-sans">
+  <div id="appHeader"></div>
+
+  <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div class="max-w-2xl mx-auto">
+      <div class="bg-background-card border border-gray-800 rounded-2xl p-8 md:p-10 text-center">
+        <div class="checkmark-circle mx-auto mb-6">
+          <div class="background"></div>
+          <div class="checkmark"></div>
+        </div>
+        <p class="text-primary uppercase tracking-[0.3em] text-xs mb-2 font-medium">Pago procesado</p>
+        <h1 class="text-3xl md:text-4xl font-bold text-white mb-3" style="font-family: 'Playfair Display', serif;">¡Pago confirmado!</h1>
+        <p class="text-gray-300 mb-8">Tu reserva está pagada y confirmada. Te enviamos un comprobante a tu email.</p>
+
+        <div id="comprobanteBox" class="bg-background-dark/50 rounded-xl p-6 text-left mb-8"></div>
+
+        <div class="flex flex-col sm:flex-row gap-3 justify-center">
+          <a href="perfil.html" class="btn-primary">Ver mi reserva</a>
+          <a href="index.html" class="btn-outline">Volver al inicio</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="appFooter"></div>
+  <script src="main.js"></script>
+  <script>
+    function pageInit() {
+      if (!Auth.isLogged()) { window.location.href = 'inicio-sesion.html'; return; }
+      const id = Storage.get(STORAGE_KEYS.RESERVA_ACTUAL);
+      if (!id) { window.location.href = 'index.html'; return; }
+      const r = Reservas.get(id);
+      if (!r) { window.location.href = 'perfil.html'; return; }
+
+      const serv = UI.servicioById(r.servicioId);
+      const esp = r.espacioId ? UI.espacioById(r.espacioId) : null;
+      const metodo = METODOS_PAGO.find(m => m.id === r.metodoPago);
+      const operacion = 'OP-' + Date.now().toString().slice(-8);
+
+      document.getElementById('comprobanteBox').innerHTML = `
+        <div class="flex items-center justify-between pb-3 border-b border-gray-800 mb-4">
+          <span class="text-xs text-gray-400 uppercase tracking-wider">Comprobante</span>
+          <span class="text-primary font-mono font-bold text-sm">${operacion}</span>
+        </div>
+        <div class="space-y-3">
+          <div class="flex justify-between text-sm">
+            <span class="text-gray-400">Reserva</span>
+            <span class="text-white font-mono">${r.id.toUpperCase()}</span>
+          </div>
+          <div class="flex justify-between text-sm">
+            <span class="text-gray-400">Servicio</span>
+            <span class="text-white font-semibold">${serv.nombre}</span>
+          </div>
+          ${esp ? `
+          <div class="flex justify-between text-sm">
+            <span class="text-gray-400">Espacio</span>
+            <span class="text-white font-semibold">${esp.nombre}</span>
+          </div>` : ''}
+          <div class="flex justify-between text-sm">
+            <span class="text-gray-400">Fecha y hora</span>
+            <span class="text-white font-semibold">${UI.formatDateShort(r.fecha)} · ${r.hora}</span>
+          </div>
+          <div class="flex justify-between text-sm">
+            <span class="text-gray-400">Método de pago</span>
+            <span class="text-white font-semibold">${metodo ? metodo.nombre : 'No especificado'}</span>
+          </div>
+          <div class="pt-3 border-t border-gray-800 flex justify-between text-base">
+            <span class="text-gray-400">Monto total</span>
+            <span class="text-primary text-2xl font-bold" style="font-family: 'Playfair Display', serif;">${UI.formatPrice(r.precio)}</span>
+          </div>
+          <div class="pt-3 border-t border-gray-800 text-xs text-gray-500 text-center">
+            ${new Date(r.createdAt).toLocaleString('es-CL')}
+          </div>
+        </div>`;
+    }
+  </script>
+</body>
+</html>

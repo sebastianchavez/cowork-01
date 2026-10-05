@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Galería · Cowork Studio</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: { primary: '#2563eb', 'primary-light': '#3b82f6', accent: '#64748b', 'background-dark': '#0f172a', 'background-card': '#1e293b' },
+          fontFamily: { display: ['Playfair Display'], sans: ['Inter'] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-page="galeria" class="bg-background-dark text-gray-200 font-sans">
+  <div id="appHeader"></div>
+
+  <main>
+    <section class="py-20 border-b border-primary/10">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <p class="text-primary uppercase tracking-[0.3em] text-xs mb-3 font-medium">Conoce nuestro espacio</p>
+        <h1 class="text-5xl md:text-6xl font-bold text-white mb-6" style="font-family: 'Playfair Display', serif;">Galería</h1>
+        <p class="text-gray-300 text-lg max-w-2xl mx-auto">Un recorrido visual por nuestros espacios, salas y momentos de comunidad.</p>
+      </div>
+    </section>
+
+    <section class="py-12">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-wrap gap-2 mb-8 justify-center" id="filtersContainer"></div>
+        <div class="gallery-grid" id="galeriaGrid"></div>
+      </div>
+    </section>
+
+    <section class="py-20">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4" style="font-family: 'Playfair Display', serif;">¿Te imaginas trabajando aquí?</h2>
+        <p class="text-gray-300 mb-8 max-w-2xl mx-auto">Reserva una visita o un día de prueba y conoce el espacio en persona.</p>
+        <a href="reserva.html" class="btn-primary">Reservar ahora</a>
+      </div>
+    </section>
+  </main>
+
+  <div class="lightbox" id="lightbox" style="display: none;">
+    <span class="lightbox-close" id="lightboxClose">&times;</span>
+    <img id="lightboxImg" src="" alt=""/>
+  </div>
+
+  <div id="appFooter"></div>
+  <script src="main.js"></script>
+  <script>
+    let activeFilter = 'all';
+    const catLabels = { oficinas: 'Oficinas', salas: 'Salas', eventos: 'Eventos' };
+
+    function renderFilters() {
+      const cats = [{ id: 'all', label: 'Todos' }, ...Object.keys(catLabels).map(c => ({ id: c, label: catLabels[c] }))];
+      document.getElementById('filtersContainer').innerHTML = cats.map(c =>
+        `<button data-cat="${c.id}" class="tab-btn ${activeFilter === c.id ? 'active' : ''}">${c.label}</button>`
+      ).join('');
+      document.querySelectorAll('[data-cat]').forEach(b => {
+        b.addEventListener('click', () => { activeFilter = b.dataset.cat; renderFilters(); renderGaleria(); });
+      });
+    }
+
+    function renderGaleria() {
+      const filtered = activeFilter === 'all' ? GALERIA : GALERIA.filter(g => g.cat === activeFilter);
+      document.getElementById('galeriaGrid').innerHTML = filtered.map(g => `
+        <div class="galeria-item aspect-square bg-background-card relative group" data-url="${g.url}" data-title="${g.titulo}">
+          <img src="${g.url}" alt="${g.titulo}" class="w-full h-full object-cover"/>
+          <div class="absolute inset-0 bg-gradient-to-t from-background-dark/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+            <div>
+              <p class="text-xs text-primary uppercase tracking-wider">${catLabels[g.cat] || g.cat}</p>
+              <p class="text-white font-semibold" style="font-family: 'Playfair Display', serif;">${g.titulo}</p>
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+      document.querySelectorAll('.galeria-item').forEach(item => {
+        item.addEventListener('click', () => {
+          document.getElementById('lightboxImg').src = item.dataset.url;
+          document.getElementById('lightbox').style.display = 'flex';
+        });
+      });
+    }
+
+    document.getElementById('lightboxClose').addEventListener('click', () => {
+      document.getElementById('lightbox').style.display = 'none';
+    });
+    document.getElementById('lightbox').addEventListener('click', (e) => {
+      if (e.target.id === 'lightbox') document.getElementById('lightbox').style.display = 'none';
+    });
+
+    function pageInit() {
+      renderFilters();
+      renderGaleria();
+    }
+  </script>
+</body>
+</html>

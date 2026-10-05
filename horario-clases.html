@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Horario de Clases & Eventos · Cowork Studio</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: { primary: '#2563eb', 'primary-light': '#3b82f6', accent: '#64748b', 'background-dark': '#0f172a', 'background-card': '#1e293b' },
+          fontFamily: { display: ['Playfair Display'], sans: ['Inter'] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-page="clases" class="bg-background-dark text-gray-200 font-sans">
+  <div id="appHeader"></div>
+
+  <main>
+    <section class="py-20 border-b border-primary/10">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <p class="text-primary uppercase tracking-[0.3em] text-xs mb-3 font-medium">Aprende & conecta</p>
+        <h1 class="text-5xl md:text-6xl font-bold text-white mb-6" style="font-family: 'Playfair Display', serif;">Horario de Clases & Eventos</h1>
+        <p class="text-gray-300 text-lg max-w-2xl mx-auto">Workshops, mentorías, charlas y eventos de networking abiertos a la comunidad.</p>
+      </div>
+    </section>
+
+    <section class="py-12">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-wrap gap-2 mb-8 justify-center" id="filtersContainer"></div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" id="clasesGrid"></div>
+      </div>
+    </section>
+
+    <section class="py-16 bg-background-card/40 border-y border-primary/10">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-10">
+          <p class="text-primary uppercase tracking-[0.3em] text-xs mb-3 font-medium">Calendario semanal</p>
+          <h2 class="text-3xl md:text-4xl font-bold text-white" style="font-family: 'Playfair Display', serif;">Toda la programación de la semana</h2>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead class="border-b border-primary/20">
+              <tr class="text-gray-400 uppercase text-xs tracking-wider">
+                <th class="py-3 px-3 text-left">Día</th>
+                <th class="py-3 px-3 text-left">Hora</th>
+                <th class="py-3 px-3 text-left">Actividad</th>
+                <th class="py-3 px-3 text-left">Profesor</th>
+                <th class="py-3 px-3 text-center">Categoría</th>
+              </tr>
+            </thead>
+            <tbody class="text-gray-300" id="scheduleTable"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="appFooter"></div>
+  <script src="main.js"></script>
+  <script>
+    let activeFilter = 'all';
+
+    function renderFilters() {
+      const cats = [
+        { id: 'all', label: 'Todas' },
+        { id: 'workshop', label: 'Workshops' },
+        { id: 'mentoria', label: 'Mentorías' },
+        { id: 'charla', label: 'Charlas' },
+        { id: 'networking', label: 'Networking' },
+        { id: 'wellness', label: 'Wellness' }
+      ];
+      document.getElementById('filtersContainer').innerHTML = cats.map(c =>
+        `<button data-cat="${c.id}" class="tab-btn ${activeFilter === c.id ? 'active' : ''}">${c.label}</button>`
+      ).join('');
+      document.querySelectorAll('[data-cat]').forEach(b => {
+        b.addEventListener('click', () => { activeFilter = b.dataset.cat; renderFilters(); renderClases(); });
+      });
+    }
+
+    function renderClases() {
+      const user = Auth.current();
+      const filtered = activeFilter === 'all' ? CLASES : CLASES.filter(c => c.categoria === activeFilter);
+      document.getElementById('clasesGrid').innerHTML = filtered.map(c => {
+        const cupos = Clases.cuposDisponibles(c);
+        const inscrito = user ? Clases.isInscrito(c.id, user.id) : false;
+        return `
+          <div class="bg-background-card border border-gray-800 rounded-2xl overflow-hidden card-hover">
+            <div class="aspect-[16/10] overflow-hidden relative">
+              <img src="${c.imagen}" alt="${c.nombre}" class="w-full h-full object-cover"/>
+              <div class="absolute top-3 left-3 bg-background-dark/85 backdrop-blur px-2 py-1 rounded text-xs text-primary font-semibold uppercase tracking-wider">${UI.categoriaClaseLabel(c.categoria)}</div>
+              <div class="absolute top-3 right-3 bg-primary/90 backdrop-blur px-2 py-1 rounded text-xs text-white font-semibold">${UI.diaSemana(c.dia)} ${c.hora}</div>
+            </div>
+            <div class="p-5">
+              <h3 class="text-white font-bold mb-2" style="font-family: 'Playfair Display', serif;">${c.nombre}</h3>
+              <p class="text-sm text-gray-400 mb-3">${c.descripcion}</p>
+              <div class="flex items-center gap-3 text-xs text-gray-400 mb-4">
+                <span class="flex items-center gap-1">
+                  <svg class="h-4 w-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                  ${c.duracionSesion}
+                </span>
+                <span class="flex items-center gap-1">
+                  <svg class="h-4 w-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                  ${c.profesor}
+                </span>
+              </div>
+              <div class="flex items-center justify-between mb-4 text-xs">
+                <span class="text-gray-400">${cupos > 0 ? `<span class="text-success font-semibold">${cupos}</span> cupos disponibles` : '<span class="text-danger font-semibold">Sin cupos</span>'}</span>
+                <span class="text-primary font-bold">${c.precio === 0 ? 'Gratis' : UI.formatPrice(c.precio)}</span>
+              </div>
+              <button class="${inscrito ? 'btn-outline' : 'btn-primary'} w-full" data-id="${c.id}" ${cupos === 0 ? 'disabled' : ''}>
+                ${!user ? 'Ingresar para inscribirse' : (inscrito ? 'Inscrito ✓' : (cupos === 0 ? 'Sin cupos' : 'Inscribirme'))}
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      document.querySelectorAll('[data-id]').forEach(b => {
+        b.addEventListener('click', () => {
+          if (!Auth.isLogged()) { window.location.href = 'inicio-sesion.html'; return; }
+          const user = Auth.current();
+          const clase = Clases.get(b.dataset.id);
+          if (Clases.isInscrito(clase.id, user.id)) {
+            UI.modal(`
+              <h3 class="text-xl font-bold text-white mb-3" style="font-family: 'Playfair Display', serif;">¿Cancelar inscripción?</h3>
+              <p class="text-gray-300 mb-5">Ya estás inscrito en <strong>${clase.nombre}</strong>. ¿Deseas liberar tu cupo?</p>
+              <div class="flex gap-3">
+                <button class="flex-1 btn-outline" data-close>Cancelar</button>
+                <button class="flex-1 btn-danger" data-confirm>Sí, liberar cupo</button>
+              </div>
+            `, {
+              onConfirm: () => {
+                Clases.desinscribir(clase.id, user.id);
+                UI.toast('Inscripción cancelada');
+                renderClases();
+                renderSchedule();
+              }
+            });
+          } else {
+            const result = Clases.inscribir(clase.id, user.id);
+            if (result.ok) {
+              UI.toast('¡Inscripción confirmada!');
+              renderClases();
+              renderSchedule();
+            } else {
+              UI.toast(result.error, 'error');
+            }
+          }
+        });
+      });
+    }
+
+    function renderSchedule() {
+      const sorted = [...CLASES].sort((a, b) => {
+        const order = ['lunes','martes','miercoles','jueves','viernes','sabado','domingo'];
+        return order.indexOf(a.dia) - order.indexOf(b.dia) || a.hora.localeCompare(b.hora);
+      });
+      document.getElementById('scheduleTable').innerHTML = sorted.map(c => `
+        <tr class="border-b border-gray-800 hover:bg-primary/5 transition-colors">
+          <td class="py-3 px-3 font-semibold text-white">${UI.diaSemana(c.dia)}</td>
+          <td class="py-3 px-3 text-primary font-semibold">${c.hora}</td>
+          <td class="py-3 px-3">
+            <p class="text-white font-semibold">${c.nombre}</p>
+            <p class="text-xs text-gray-500">${c.duracionSesion}</p>
+          </td>
+          <td class="py-3 px-3 text-gray-400">${c.profesor}</td>
+          <td class="py-3 px-3 text-center">
+            <span class="inline-block text-xs px-2 py-1 rounded-full bg-primary/10 text-primary border border-primary/30">${UI.categoriaClaseLabel(c.categoria)}</span>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function pageInit() {
+      renderFilters();
+      renderClases();
+      renderSchedule();
+    }
+  </script>
+</body>
+</html>
